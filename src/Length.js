@@ -1,35 +1,38 @@
 import { useState } from "react";
 
-const Time = () => {
+const Length = () => {
   const [amount, setAmount] = useState(0);
   const [invert, setInvert] = useState(false);
   const onChange = (e) => {
     setAmount(e.target.value);
   };
-  const reset = () => {
-    setAmount(0);
-  };
   const onInvert = () => {
     reset();
     setInvert(!invert);
   };
+
+  const reset = () => {
+    setAmount(0);
+  };
   return (
-    <div className="Time">
-      <h4>분(m)&시간(h)변환</h4>
-      <div className="minutes">
-        분(m):
+    <div className="Length">
+      <h4>마일(mile)&킬로마일(km)변환</h4>
+      <div className="mile">
+        마일(mile):
         <input
-          type="number"
-          value={invert ? amount * 60 : amount}
+          value={
+            invert
+              ? Math.round((amount / 1.61 + Number.EPSILON) * 100) / 100
+              : amount
+          }
           onChange={onChange}
           disabled={invert}
         />
       </div>
-      <div className="hours">
-        시간(h):
+      <div className="km">
+        킬로미터(km):
         <input
-          type="number"
-          value={invert ? amount : Math.round(amount / 60)}
+          value={invert ? amount : amount * 1.61}
           onChange={onChange}
           disabled={!invert}
         />
@@ -39,4 +42,4 @@ const Time = () => {
     </div>
   );
 };
-export default Time;
+export default Length;
